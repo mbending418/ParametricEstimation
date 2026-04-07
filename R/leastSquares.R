@@ -9,6 +9,8 @@ library(VGAM)
 #' 
 #' @param data the data to estimate parameters from
 #' 
+#' @param censor a censorship indicator (an array of 0's and 1's the length of data with 1 indicating not censored)
+#' 
 #' @param distribution the distribution to estimate parameters for
 #' 
 #' @param plot.fit set to TRUE to plot the least squares fit
@@ -17,6 +19,7 @@ library(VGAM)
 #' 
 #' @export
 least.squares.estimator <- function(data,
+                                    censor = seq(1,n),
                                     distribution = c("exponential",
                                                      "shift.exponential",
                                                      "weibull",
@@ -60,6 +63,10 @@ least.squares.estimator <- function(data,
   } else {
     stop(glue("distribution unknown: {distribution}"))
   }
+  
+  #removed the censored data
+  x.var = x.var[censor*seq(1,n)]
+  y.var = y.var[censor*seq(1,n)]
   
   model = lm(formula=y.var~x.var)
   slope=unname(model$coefficients[2])
