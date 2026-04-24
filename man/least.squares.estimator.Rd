@@ -6,6 +6,7 @@
 \usage{
 least.squares.estimator(
   data,
+  censor = seq(1, n),
   distribution = c("exponential", "shift.exponential", "weibull", "shift.weibull",
     "lognormal", "birnbaum.saunders"),
   plot.fit = FALSE
@@ -13,6 +14,8 @@ least.squares.estimator(
 }
 \arguments{
 \item{data}{the data to estimate parameters from}
+
+\item{censor}{a censorship indicator (an array of 0's and 1's the length of data with 1 indicating not censored)}
 
 \item{distribution}{the distribution to estimate parameters for}
 
